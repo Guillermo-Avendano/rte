@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  {{ .Values.rte.name }} 
+spec:
+  replicas: {{ .Values.replicaCount }} 
+  selector:
+    matchLabels:
+      app:  {{ .Values.rte.name }} 
+  template:
+    metadata:
+      labels:
+        app:  {{ .Values.rte.name }} 
+    spec:
+      containers:
+      - name:  {{ .Values.rte.name }} 
+        image: {{ .Values.rte.image }}
+        imagePullPolicy: IfNotPresent        
+        ports:
+          - containerPort:  {{ .Values.service.port }}
+        env: 
+          - name: CURR_POD_UID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid 
+        volumeMounts:
+          - mountPath: /home/rte/bzwapps/deploy/instance/users
+            name: pv-bzwapps-users              
+          - mountPath: /home/rte/bzwapps/deploy/instance/groups
+            name: pv-bzwapps-groups 
+          - mountPath: /home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzshared
+            name: pv-bzwapps-storage1 
+          - mountPath: /home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzw
+            name: pv-bzwapps-storage2 
+          - mountPath: /home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzw2h
+            name: pv-bzwapps-storage3 
+          - mountPath: /home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.ssoAuth
+            name: pv-bzwapps-storage4    
+          - mountPath: /home/rte/bzwapps/deploy/site/ZLUX/pluginStorage
+            name: pv-bzwapps-site1
+          - mountPath: /home/rte/bzwapps/deploy/site/ZLUX/serverConfig
+            name: pv-bzwapps-site2
+          - mountPath: bzwapps/deploy/product/ZLUX/pluginStorage/com.rs.bzadm/_internal/services/auth
+            name: pv-bzwapps-admin1
+          - mountPath: bzwapps/deploy/product/ZLUX/pluginStorage/com.rs.bzshared/_db_store/administrator
+            name: pv-bzwapps-admin2            
+          - mountPath: /home/rte/bzwapps/log  
+            subPathExpr: rte_cluster/$(CURR_POD_UID)
+            name: pv-bzwapps-log
+          - mountPath: /home/rte/bzwapps/rte_cluster
+            subPath: rte_cluster
+            name: pv-bzwapps-log           
+      volumes:
+        - name: pv-bzwapps-users
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-users          
+        - name: pv-bzwapps-groups
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-groups
+        - name: pv-bzwapps-storage1
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-storage1
+        - name: pv-bzwapps-storage2
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-storage2
+        - name: pv-bzwapps-storage3
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-storage3
+        - name: pv-bzwapps-storage4
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-storage4
+        - name: pv-bzwapps-site1
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-site1
+        - name: pv-bzwapps-site2
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-site2
+        - name: pv-bzwapps-admin1
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-admin1
+        - name: pv-bzwapps-admin2
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-admin2
+        - name: pv-bzwapps-log
+          persistentVolumeClaim:
+            claimName: pvc-bzwapps-log  

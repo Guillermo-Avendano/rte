@@ -1,0 +1,6 @@
+replicaCount: 1
+
+rte:
+  name: rteweb
+  image: registry.rocketsoftware.com/rte:10.1.5.0065
+

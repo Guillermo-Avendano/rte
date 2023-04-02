@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  rocket-te:
+    image: registry.rocketsoftware.com/rte:10.1.5.0065
+    ports:
+      - "8543:8543"
+    volumes:
+      - bzwapps-users:/home/rte/bzwapps/deploy/instance/users 
+      - bzwapps-groups:/home/rte/bzwapps/deploy/instance/groups
+      - bzwapps-storage1:/home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzshared
+      - bzwapps-storage2:/home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzw
+      - bzwapps-storage3:/home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.bzw2h
+      - bzwapps-storage4:/home/rte/bzwapps/deploy/instance/ZLUX/pluginStorage/com.rs.ssoAuth
+      - bzwapps-site1:/home/rte/bzwapps/deploy/site/ZLUX/pluginStorage
+      - bzwapps-site2:/home/rte/bzwapps/deploy/site/ZLUX/serverConfig
+      - bzwapps-log:/home/rte/bzwapps/log/
+volumes:
+  bzwapps-users:
+  bzwapps-groups:
+  bzwapps-storage1:
+  bzwapps-storage2:
+  bzwapps-storage3:
+  bzwapps-storage4:
+  bzwapps-site1:
+  bzwapps-site2:
+  bzwapps-log:
+

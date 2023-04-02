@@ -1,0 +1,17 @@
+# Default values for rteweb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+rte:
+  name: rteweb
+  image: registry.rocketsoftware.com/rte:10.1.5.0065
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8543
+
+
+
