@@ -1,6 +1,6 @@
-resource "helm_release" "rtebna" {
-  name       = "rtebna"
-  chart      = "/home/rocket/luis/rte"
+resource "helm_release" "rteweb" {
+  name       = "rteweb"
+  chart      = "${path.module}/helm/rte-10.05"
   namespace  = "bna"
   create_namespace = true
 
@@ -14,6 +14,6 @@ resource "helm_release" "rtebna" {
     value = "rte.bna.com"
   }
   values = [
-    "${file("${path.module}/rte/values-test.yaml")}"
+    "${file("${path.module}/helm/rte-10.05/values-test.yaml")}"
   ]
 }
